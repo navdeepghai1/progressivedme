@@ -1,0 +1,14 @@
+{
+	"css/progressivedme-min.css":[
+		"public/css/progressivedme.css"
+	],
+	"js/progressivedme-min.js":[
+		"public/js/progressivedme.js"
+	],
+	"css/progressivedme-web-min.css":[
+		"public/css/progressivedme-web.css"
+	],
+	"js/progressivedme-web-min.js":[
+		"public/js/progressivedme-web.js"
+	]
+}

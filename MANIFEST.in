@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include progressivedme *.css
+recursive-include progressivedme *.csv
+recursive-include progressivedme *.html
+recursive-include progressivedme *.ico
+recursive-include progressivedme *.js
+recursive-include progressivedme *.json
+recursive-include progressivedme *.md
+recursive-include progressivedme *.png
+recursive-include progressivedme *.py
+recursive-include progressivedme *.svg
+recursive-include progressivedme *.txt
+recursive-exclude progressivedme *.pyc
