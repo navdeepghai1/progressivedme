@@ -46,6 +46,10 @@ class ShopifyItemExport(object):
                 conditions = ""
                 if self.filters.get("show_items_with_image"):
                         conditions += " AND `tabItem`.image IS NOT NULL "
+                else:
+                        conditions += " AND `tabItem`.image IS NULL "
+                if self.filters.item_group:
+                        conditions += " AND `tabItem`.item_group = '%s' "%(self.filters.item_group)
                 items = frappe._dict()
                 for item in frappe.db.sql(""" SELECT `tabItem`.name, `tabItem`.item_group,
                             `tabItem`.item_name, `tabItem`.description, `tabItem`.extended_description,
@@ -53,7 +57,9 @@ class ShopifyItemExport(object):
                             FROM
                                     `tabItem`
                             WHERE
-                                    `tabItem`.disabled = 0 %s 
+                                    `tabItem`.disabled = 0 %s
+                            ORDER BY
+                                    `tabItem`.item_name ASC, `tabItem`.item_group
                             """%(conditions), as_dict=True):
                         items.setdefault(item.name, item)
 

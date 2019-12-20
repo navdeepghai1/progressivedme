@@ -7,5 +7,11 @@ frappe.query_reports["Shopify Item Export"] = {
 			"fieldname": "show_items_with_image",
 			"fieldtype": "Check",
 			"label": "Show Items With Image",
+			"default": true,
+		},{
+			"fieldname": "item_group",
+			"fieldtype": "Link",
+			"options": "Item Group",
+			"label": "Item Category",
 	}]
 }
