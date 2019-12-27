@@ -63,6 +63,9 @@ class ShopifyItemExport(object):
 		if self.filters.item_group and not self.filters.sub_item_group:
 			conditions += """ AND `tabItem`.item_group IN (SELECT `tabItem Group`.name FROM `tabItem Group`
 					WHERE `tabItem Group`.parent_item_group = '%s')"""%(self.filters.item_group)
+		if self.filters.get("drop_ship_legend"):
+			conditions += "  AND `tabItem`.drop_ship_status = '%s' "%(self.filters.drop_ship_legend)
+
 		items = frappe._dict()
 		for item in frappe.db.sql(""" SELECT `tabItem`.name,
 				`tabItem`.item_name, `tabItem`.description, `tabItem`.extended_description,

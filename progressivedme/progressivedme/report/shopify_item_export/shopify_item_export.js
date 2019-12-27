@@ -47,5 +47,11 @@ frappe.query_reports["Shopify Item Export"] = {
 			"fieldname": "end",
 			"fieldtype": "Int",
 			"label": __("End"),
+		},{
+			"fieldname": "drop_ship_legend",
+			"fieldtype": "Select",
+			"options": ["N", "O", "S"],
+			"default": "N",
+			"label": __("Drop Ship Legend"),
 	}]
 }
