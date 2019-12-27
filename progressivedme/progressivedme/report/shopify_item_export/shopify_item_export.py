@@ -33,7 +33,7 @@ class ShopifyItemExport(object):
 				"variant_taxable": "",
 				"tags":" ".join([item.sub_item_group]),
 				"variant_inventory_cost": item.standard_price,
-				"image_src": "https://navdeepghai1.info%s"%(item.image) if item.image else "",
+				"image_src": "https://navdeepghai.info%s"%(item.image) if item.image else "",
 				"image_position": 1,
 				"image_alt_text": item.item_name,
 				"seo_title": item.item_name,
