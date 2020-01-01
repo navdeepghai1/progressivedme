@@ -53,5 +53,36 @@ frappe.query_reports["Shopify Item Export"] = {
 			"options": ["N", "O", "S"],
 			"default": "N",
 			"label": __("Drop Ship Legend"),
+		},{
+			"fieldname":"exclude_categories",
+			"label": __("Exclude Categories"),
+			"fieldtype": "MultiSelect",
+			get_data: function() {
+				var projects = frappe.query_report.get_filter_value("exclude_categories") || "";
+
+				const values = projects.split(/\s*,\s*/).filter(d => d);
+				const txt = projects.match(/[^,\s*]*$/)[0] || '';
+				let data = [];
+
+				frappe.call({
+					type: "GET",
+					method:'frappe.desk.search.search_link',
+					async: false,
+					no_spinner: true,
+					args: {
+						doctype: "Item Group",
+						txt: txt,
+						filters: {
+							"name": ["not in", values]
+						}
+					},
+					callback: function(r) {
+						data = r.results;
+					}
+				});
+				return data;
+			},
+			"default": "CBD Products, Custom Catalogue Program"
+	
 	}]
 }

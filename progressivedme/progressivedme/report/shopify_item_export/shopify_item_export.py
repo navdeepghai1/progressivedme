@@ -42,7 +42,11 @@ class ShopifyItemExport(object):
                                 "variant_weight": item.item_weight,
                                 "variant_weight_unit": "lb",
                                 "published_scope": "Web",
-                                "published_at": getdate(item.date_established).strftime("%Y-%m-%dT00:00:00-00:00")
+                                "published_at": getdate(item.date_established).strftime("%Y-%m-%dT00:00:00-00:00"),
+				"variant_inventory_tracker": "fulfillment-service-handle",
+				"variant_inventory_qty": 0,
+				"variant_inventory_policy": "continue",
+				"variant_fulfillment_service":"fulfillment-service-handle",
 			})
 
 		return columns, data
@@ -68,6 +72,7 @@ class ShopifyItemExport(object):
 					WHERE `tabItem Group`.parent_item_group = '%s')"""%(self.filters.item_group)
 		if self.filters.get("drop_ship_legend"):
 			conditions += "  AND `tabItem`.drop_ship_status = '%s' "%(self.filters.drop_ship_legend)
+		conditions += self.get_exclude_categories()
 
 		items = frappe._dict()
 		for item in frappe.db.sql(""" SELECT `tabItem`.name,
@@ -95,6 +100,18 @@ class ShopifyItemExport(object):
 			items.setdefault(item.name, item)
 
 		return items
+	
+	def get_exclude_categories(self):
+		exclude_categories = cstr(self.filters.get("exclude_categories")).split(",")
+		condition = ""
+		if exclude_categories:
+			item_groups = ", ".join(["'%s'"%(ig) for ig in exclude_categories])
+			d = ", ".join(["'%s'"%(ig.name) for ig in frappe.db.sql("""SELECT `tabItem Group`.name FROM `tabItem Group`
+					WHERE `tabItem Group`.parent_item_group IN ({item_groups}) OR
+						`tabItem Group`.name IN ({item_groups})
+				""".format(item_groups = item_groups), as_dict=True)])
+			condition = " AND `tabItem`.item_group NOT IN (%s) "%(d)
+		return condition
 
 	def get_columns(self):
 		return [{

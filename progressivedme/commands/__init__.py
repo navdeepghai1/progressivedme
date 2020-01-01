@@ -6,16 +6,22 @@ import frappe
 import click
 from frappe.commands import pass_context
 
-@click.command()
-@click.argument("filename")
-@pass_context
-def read_data(context, filename):
+def connect_to_default_site(context):
+	flag = False
 	if(context.get("sites")):
 		for site in context.get("sites") or []:
 			if site == "progressivedme.com":
 				frappe.init(site)
 				frappe.connect()
-	else:
+				flag = True
+	return flag
+	
+@click.command()
+@click.argument("filename")
+@pass_context
+def read_data(context, filename):
+	if(not connect_to_default_site(context)):
+		print("Site not found")
 		return
 	from progressivedme.read_excel_data import read_csv_data
 	update_subgroup(read_csv_data(context, filename))
@@ -51,5 +57,15 @@ def update_subgroup(data):
 			print("Missing Information for Item: %s"%(item_number))
 			
 
+@click.command()
+@click.argument("filename")
+@pass_context
+def update_drop_ship_legend(context, filename):
+	if(not connect_to_default_site(context)):
+		print("Site not found")
+		return
+	from progressivedme.read_excel_data import read_csv_data
+	data = read_csv_data(context, filename)
+	print(data)		
 
-commands = [read_data]
+commands = [read_data, update_drop_ship_legend]
