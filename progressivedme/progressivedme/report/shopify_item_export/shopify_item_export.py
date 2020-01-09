@@ -31,7 +31,7 @@ class ShopifyItemExport(object):
 				"variant_price": item_price,
 				"list_price": item.list_price,
 				"variant_taxable": "",
-				"tags":" ".join([item.sub_item_group]),
+				"tags":", ".join([item.sub_item_group, item.item_group]),
 				"variant_inventory_cost": item.standard_price,
 				"image_src": "https://navdeepghai.info%s"%(item.image) if item.image else "",
 				"image_position": 1,
@@ -41,12 +41,7 @@ class ShopifyItemExport(object):
 				"published": item.published,
                                 "variant_weight": item.item_weight,
                                 "variant_weight_unit": "lb",
-                                "published_scope": "Web",
                                 "published_at": getdate(item.date_established).strftime("%Y-%m-%dT00:00:00-00:00"),
-				"variant_inventory_tracker": "fulfillment-service-handle",
-				"variant_inventory_qty": 0,
-				"variant_inventory_policy": "continue",
-				"variant_fulfillment_service":"fulfillment-service-handle",
 			})
 
 		return columns, data
@@ -145,60 +140,10 @@ class ShopifyItemExport(object):
 				"fieldtype": "Data",
 				"label": _("Tags"),
 				"width": 150,
-			},{
-                                "fieldname": "template_suffix",
-                                "fieldtype": "Data",
-                                "label": "Template Suffix",
-                                "width": 150
-                        },{
-                                "fieldname": "published_scope",
-                                "fieldtype": "Data",
-                                "label": "Published Scope",
-                                "width": 150
-                        },{
-                                "fieldname": "published",
-                                "fieldtype": "Data",
-                                "label": "Published",
-                                "width": 150,
                         },{
                                 "fieldname": "published_at",
                                 "fieldtype": "Data",
                                 "label": "Published At",
-                                "width": 150,
-                        },{
-                                "fieldname": "option1_name",
-                                "fieldtype": "Data",
-                                "label": "Option1 Name",
-                                "width": 150
-                        },{
-                                "fieldname": "option1_value",
-                                "fieldtype": "Data",
-                                "label": "Option1 Value",
-                                "width": 150
-                        },{
-                                "fieldname": "option2_name",
-                                "fieldtype": "Data",
-                                "label": "Option2 Name",
-                                "width": 150
-                        },{
-                                "fieldname": "option2_value",
-                                "fieldtype": "Data",
-                                "label": "Option2 Value",
-                                "width": 150
-                        },{
-                                "fieldname": "option3_name",
-                                "fieldtype": "Data",
-                                "label": "Option3 Name",
-                                "width": 150
-                        },{
-                                "fieldname": "option3_value",
-                                "fieldtype": "Data",
-                                "label": "Option3 Value",
-                                "width": 150
-                        },{
-                                "fieldname": "variant_sku",
-                                "fieldtype": "Data",
-                                "label": "Variant SKU",
                                 "width": 150,
                         },{
                                 "fieldname": "metafields_global_title_tag",
@@ -230,46 +175,11 @@ class ShopifyItemExport(object):
 				"fieldtype": "Data",
 				"label": "Metafield Value Type",
 				"width": 200,
-                        },{
-				"fieldname": "variant_grams",
-				"fieldtype": "Data",
-				"label": "Variant Grams",
-				"width": 120,
-			},{
-				"fieldname": "variant_inventory_tracker",
-				"fieldtype": "Data",
-				"label": "Variant Inventory Tracker",
-				"width": 200,
-			},{
-				"fieldname": "variant_inventory_qty",
-				"fieldtype": "Data",
-				"label": "Variant Inventory Qty",
-				"width": 200
-			},{
-				"fieldname": "variant_inventory_policy",
-				"fieldtype": "Data",
-				"label": "Variant Inventory Policy",
-				"width": 200,
-			},{
-				"fieldname": "variant_inventory_cost",
-				"fieldtype": "Currency",
-				"label": "Variant Inventory Cost",
-				"width": 200,
-			},{
-				"fieldname": "variant_fulfillment_service",
-				"fieldtype": "Data",
-				"label": "Variant Fulfillment Service",
-				"width": 200,
 			},{
 				"fieldname": "variant_price",
 				"fieldtype": "Currency",
 				"label": "Variant Price",
 				"width": 120,
-                        },{
-				"fieldname": "variant_compare_at_price",
-				"fieldtype": "Data",
-				"label": "Variant Compare At Price",
-				"width": 150,
                         },{
 				"fieldname": "variant_require_shipping",
 				"fieldtype": "Data",
